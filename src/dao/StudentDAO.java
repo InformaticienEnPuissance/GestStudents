@@ -1,5 +1,9 @@
 package dao;
 
+
+public class StudentDAO {
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,4 +69,5 @@ public class StudentDAO {
         ps.close();
         connection.close();
     }
+
 }
