@@ -18,7 +18,7 @@
             "mainClass": "main.Main",
             "projectName": "GestStudent_b3264c05",
             "classPaths": [
-        "lib/mysql-connector-java-8.0.XX.jar"
+        "lib/mysql-connector-java-8.0.28.jar"
       ]
 
         }
