@@ -1,19 +1,28 @@
 package ui;
 
-import dao.StudentDAO;
-import model.Student;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import dao.StudentDAO;
+import model.Student;
+
 public class StudentUI extends JFrame {
-    private JTextField idField, firstNameField, lastNameField, emailField;
-    private JTextArea resultArea;
-    private StudentDAO studentDAO;
+
+    private final JTextField idField;
+    private final JTextField firstNameField;
+    private final JTextField lastNameField;
+    private final JTextField emailField;
+    private final JTextArea resultArea;
+    private final StudentDAO studentDAO;
 
     public StudentUI() {
         studentDAO = new StudentDAO();
@@ -57,28 +66,20 @@ public class StudentUI extends JFrame {
         add(scrollPane);
 
         // Actions pour les boutons CRUD
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addStudent();
-            }
+        addButton.addActionListener((ActionEvent e) -> {
+            addStudent();
         });
 
-        updateButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateStudent();
-            }
+        updateButton.addActionListener((ActionEvent e) -> {
+            updateStudent();
         });
 
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                deleteStudent();
-            }
+        deleteButton.addActionListener((ActionEvent e) -> {
+            deleteStudent();
         });
 
-        viewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                viewAllStudents();
-            }
+        viewButton.addActionListener((ActionEvent e) -> {
+            viewAllStudents();
         });
 
         setVisible(true);
