@@ -1,14 +1,6 @@
 package ui;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -24,66 +16,23 @@ public class StudentUI extends JFrame {
     private final JTextArea resultArea;
     private final StudentDAO studentDAO;
 
-    public StudentUI() {
-        studentDAO = new StudentDAO();
-
-        // Configuration de la fenêtre principale
-        setTitle("Gestion des Étudiants");
-        setSize(500, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(6, 2));
-
-        // Création des labels et champs de texte
-        JLabel idLabel = new JLabel("ID:");
-        idField = new JTextField(20);
-
-        JLabel firstNameLabel = new JLabel("Prénom:");
-        firstNameField = new JTextField(20);
-
-        JLabel lastNameLabel = new JLabel("Nom:");
-        lastNameField = new JTextField(20);
-
-        JLabel emailLabel = new JLabel("Email:");
-        emailField = new JTextField(20);
-
-        // Zone de résultats
-        resultArea = new JTextArea(10, 40);
-        JScrollPane scrollPane = new JScrollPane(resultArea);
-
-        // Boutons CRUD
-        JButton addButton = new JButton("Ajouter");
-        JButton updateButton = new JButton("Mettre à jour");
-        JButton deleteButton = new JButton("Supprimer");
-        JButton viewButton = new JButton("Afficher tous");
-
-        // Ajout des composants à la fenêtre
-        add(idLabel); add(idField);
-        add(firstNameLabel); add(firstNameField);
-        add(lastNameLabel); add(lastNameField);
-        add(emailLabel); add(emailField);
-        add(addButton); add(updateButton);
-        add(deleteButton); add(viewButton);
-        add(scrollPane);
-
-        // Actions pour les boutons CRUD
-        addButton.addActionListener((ActionEvent e) -> {
-            addStudent();
-        });
-
-        updateButton.addActionListener((ActionEvent e) -> {
-            updateStudent();
-        });
-
-        deleteButton.addActionListener((ActionEvent e) -> {
-            deleteStudent();
-        });
-
-        viewButton.addActionListener((ActionEvent e) -> {
-            viewAllStudents();
-        });
-
-        setVisible(true);
+    public class StudentUI {
+        public void showMenu() {
+            // Logique de menu
+            System.out.println("Veuillez entrer les informations de l'étudiant :");
+            
+            // Ajoute un étudiant fictif pour tester
+            Student student = new Student(1, "John", "Doe", "john.doe@example.com");
+            try {
+                StudentDAO studentDAO = new StudentDAO();
+                studentDAO.addStudent(student);
+                System.out.println("Étudiant ajouté avec succès.");
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de l'ajout : " + e.getMessage());
+            }
+        }
     }
+    
 
     // Méthode pour ajouter un étudiant
     private void addStudent() {
@@ -102,56 +51,56 @@ public class StudentUI extends JFrame {
         }
     }
 
-    // Méthode pour mettre à jour un étudiant
-    private void updateStudent() {
-        int id = Integer.parseInt(idField.getText());
-        String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
-        String email = emailField.getText();
+    // // Méthode pour mettre à jour un étudiant
+    // private void updateStudent() {
+    //     int id = Integer.parseInt(idField.getText());
+    //     String firstName = firstNameField.getText();
+    //     String lastName = lastNameField.getText();
+    //     String email = emailField.getText();
 
-        Student student = new Student(id, firstName, lastName, email);
+    //     Student student = new Student(id, firstName, lastName, email);
 
-        try {
-            studentDAO.updateStudent(student);
-            resultArea.setText("Étudiant mis à jour avec succès !");
-            clearFields();
-        } catch (SQLException e) {
-            resultArea.setText("Erreur lors de la mise à jour : " + e.getMessage());
-        }
-    }
+    //     try {
+    //         studentDAO.updateStudent(student);
+    //         resultArea.setText("Étudiant mis à jour avec succès !");
+    //         clearFields();
+    //     } catch (SQLException e) {
+    //         resultArea.setText("Erreur lors de la mise à jour : " + e.getMessage());
+    //     }
+    // }
 
-    // Méthode pour supprimer un étudiant
-    private void deleteStudent() {
-        int id = Integer.parseInt(idField.getText());
+    // // Méthode pour supprimer un étudiant
+    // private void deleteStudent() {
+    //     int id = Integer.parseInt(idField.getText());
 
-        try {
-            studentDAO.deleteStudent(id);
-            resultArea.setText("Étudiant supprimé avec succès !");
-            clearFields();
-        } catch (SQLException e) {
-            resultArea.setText("Erreur lors de la suppression : " + e.getMessage());
-        }
-    }
+    //     try {
+    //         studentDAO.deleteStudent(id);
+    //         resultArea.setText("Étudiant supprimé avec succès !");
+    //         clearFields();
+    //     } catch (SQLException e) {
+    //         resultArea.setText("Erreur lors de la suppression : " + e.getMessage());
+    //     }
+    // }
 
-    // Méthode pour afficher tous les étudiants
-    private void viewAllStudents() {
-        try {
-            List<Student> students = studentDAO.getAllStudents();
-            StringBuilder builder = new StringBuilder();
-            for (Student student : students) {
-                builder.append(student).append("\n");
-            }
-            resultArea.setText(builder.toString());
-        } catch (SQLException e) {
-            resultArea.setText("Erreur lors de l'affichage : " + e.getMessage());
-        }
-    }
+    // // Méthode pour afficher tous les étudiants
+    // private void viewAllStudents() {
+    //     try {
+    //         List<Student> students = studentDAO.getAllStudents();
+    //         StringBuilder builder = new StringBuilder();
+    //         for (Student student : students) {
+    //             builder.append(student).append("\n");
+    //         }
+    //         resultArea.setText(builder.toString());
+    //     } catch (SQLException e) {
+    //         resultArea.setText("Erreur lors de l'affichage : " + e.getMessage());
+    //     }
+    // }
 
-    // Méthode pour vider les champs de saisie
-    private void clearFields() {
-        idField.setText("");
-        firstNameField.setText("");
-        lastNameField.setText("");
-        emailField.setText("");
-    }
+    // // Méthode pour vider les champs de saisie
+    // private void clearFields() {
+    //     idField.setText("");
+    //     firstNameField.setText("");
+    //     lastNameField.setText("");
+    //     emailField.setText("");
+    // }
 }
