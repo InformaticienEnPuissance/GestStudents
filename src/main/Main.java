@@ -4,7 +4,9 @@ import ui.StudentUI;
 
 public class Main {
     public static void main(String[] args) {
-        // Crée et affiche l'interface utilisateur
-        new StudentUI();
+        System.out.println("Démarrage du programme...");
+        
+        StudentUI ui = new StudentUI();
+        ui.showMenu();
     }
 }

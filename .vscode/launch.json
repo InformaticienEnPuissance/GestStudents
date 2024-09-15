@@ -4,12 +4,19 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Main",
-            "request": "launch",
-            "mainClass": "main.Main",
-            "vmArgs": "-cp lib/mysql-connector-java-8.0.28.jar"
-        }
+      {
+        "type": "java",
+        "name": "TestConnection",
+        "request": "launch",
+        "mainClass": "lib.TestConnection",
+        "projectName": "GestStudent_b3264c05"
+      },
+      {
+        "type": "java",
+        "name": "Debug (Launch)-Main",
+        "request": "launch",
+        "mainClass": "main.Main",
+        "vmArgs": "-cp lib/mysql-connector-java-8.0.28.jar"
+      }
     ]
 }
