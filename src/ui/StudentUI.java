@@ -1,99 +1,99 @@
 package ui;
 
+import dao.StudentDAO;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
-
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
-import dao.StudentDAO;
 import model.Student;
 
 public class StudentUI extends JFrame {
 
-    private JTextField idField;
-    private JTextField firstNameField;
-    private JTextField lastNameField;
-    private JTextField emailField;
-    private JTextArea resultArea;
-    private StudentDAO studentDAO;
+    private final JTextField idField;
+    private final JTextField firstNameField;
+    private final JTextField lastNameField;
+    private final JTextField emailField;
+    private final JTextArea resultArea;
+    private final StudentDAO studentDAO;
 
     public StudentUI() {
-        studentDAO = new StudentDAO();  // Initialisation du DAO
-
-        // Configuration de la fenêtre principale
-        setTitle("Student Management");
+        setTitle("Student Management System");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(6, 2));
+        setLayout(new BorderLayout());
 
-        // Création des composants d'interface
-        JLabel idLabel = new JLabel("ID:");
+        // Init DAO
+        studentDAO = new StudentDAO();
+
+        // Panel d'entrée des données (input panel)
+        JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Détails de l'étudiant"));
+
         idField = new JTextField();
-
-        JLabel firstNameLabel = new JLabel("First Name:");
         firstNameField = new JTextField();
-
-        JLabel lastNameLabel = new JLabel("Last Name:");
         lastNameField = new JTextField();
-
-        JLabel emailLabel = new JLabel("Email:");
         emailField = new JTextField();
 
-        JButton addButton = new JButton("Add Student");
-        JButton updateButton = new JButton("Update Student");
-        JButton deleteButton = new JButton("Delete Student");
-        JButton viewAllButton = new JButton("View All Students");
+        inputPanel.add(new JLabel("ID:"));
+        inputPanel.add(idField);
+        inputPanel.add(new JLabel("Prénom:"));
+        inputPanel.add(firstNameField);
+        inputPanel.add(new JLabel("Nom:"));
+        inputPanel.add(lastNameField);
+        inputPanel.add(new JLabel("Email:"));
+        inputPanel.add(emailField);
 
+        // Panel des boutons (action panel)
+        JPanel actionPanel = new JPanel(new GridLayout(1, 4, 10, 10));
+        actionPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
+
+        JButton addButton = new JButton("Ajouter");
+        JButton updateButton = new JButton("Mettre à jour");
+        JButton deleteButton = new JButton("Supprimer");
+        JButton viewButton = new JButton("Afficher tout");
+
+        actionPanel.add(addButton);
+        actionPanel.add(updateButton);
+        actionPanel.add(deleteButton);
+        actionPanel.add(viewButton);
+
+        // Panel pour l'affichage des résultats (output panel)
         resultArea = new JTextArea();
+        resultArea.setBorder(BorderFactory.createTitledBorder("Résultats"));
         resultArea.setEditable(false);
 
-        // Ajout des composants à la fenêtre
-        add(idLabel);
-        add(idField);
-        add(firstNameLabel);
-        add(firstNameField);
-        add(lastNameLabel);
-        add(lastNameField);
-        add(emailLabel);
-        add(emailField);
-        add(addButton);
-        add(updateButton);
-        add(deleteButton);
-        add(viewAllButton);
-        add(new JScrollPane(resultArea));
+        JScrollPane scrollPane = new JScrollPane(resultArea);
 
-        // Définir les actions pour les boutons
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                addStudent();
-            }
+        // Ajouter les panels au frame principal
+        add(inputPanel, BorderLayout.NORTH);
+        add(actionPanel, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.SOUTH);
+
+        // Actions des boutons
+        addButton.addActionListener((ActionEvent e) -> {
+            addStudent();
         });
 
-        updateButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateStudent();
-            }
+        updateButton.addActionListener((ActionEvent e) -> {
+            updateStudent();
         });
 
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                deleteStudent();
-            }
+        deleteButton.addActionListener((ActionEvent e) -> {
+            deleteStudent();
         });
 
-        viewAllButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                viewAllStudents();
-            }
+        viewButton.addActionListener((ActionEvent e) -> {
+            viewAllStudents();
         });
     }
 
@@ -107,10 +107,10 @@ public class StudentUI extends JFrame {
 
         try {
             studentDAO.addStudent(student);
-            resultArea.setText("Student added successfully!");
+            resultArea.setText("Étudiant ajouté avec succès !");
             clearFields();
         } catch (SQLException e) {
-            resultArea.setText("Error adding student: " + e.getMessage());
+            resultArea.setText("Erreur lors de l'ajout : " + e.getMessage());
         }
     }
 
@@ -125,10 +125,10 @@ public class StudentUI extends JFrame {
 
         try {
             studentDAO.updateStudent(student);
-            resultArea.setText("Student updated successfully!");
+            resultArea.setText("Étudiant mis à jour avec succès !");
             clearFields();
         } catch (SQLException e) {
-            resultArea.setText("Error updating student: " + e.getMessage());
+            resultArea.setText("Erreur lors de la mise à jour : " + e.getMessage());
         }
     }
 
@@ -138,10 +138,10 @@ public class StudentUI extends JFrame {
 
         try {
             studentDAO.deleteStudent(id);
-            resultArea.setText("Student deleted successfully!");
+            resultArea.setText("Étudiant supprimé avec succès !");
             clearFields();
         } catch (SQLException e) {
-            resultArea.setText("Error deleting student: " + e.getMessage());
+            resultArea.setText("Erreur lors de la suppression : " + e.getMessage());
         }
     }
 
@@ -155,7 +155,7 @@ public class StudentUI extends JFrame {
             }
             resultArea.setText(builder.toString());
         } catch (SQLException e) {
-            resultArea.setText("Error displaying students: " + e.getMessage());
+            resultArea.setText("Erreur lors de l'affichage : " + e.getMessage());
         }
     }
 
@@ -167,12 +167,10 @@ public class StudentUI extends JFrame {
         emailField.setText("");
     }
 
-    // Lancer l'application
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new StudentUI().setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            StudentUI ui = new StudentUI();
+            ui.setVisible(true);
         });
     }
 }
