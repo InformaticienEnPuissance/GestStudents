@@ -2,6 +2,9 @@ package ui;
 
 import dao.StudentDAO;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -10,6 +13,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -31,6 +36,12 @@ public class StudentUI extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenu EtudiantMenu = new JMenu("Etudiant");
+        menuBar.add(fileMenu);
+        menuBar.add(EtudiantMenu);
+        setJMenuBar(menuBar);
 
         // Init DAO
         studentDAO = new StudentDAO();
@@ -54,13 +65,18 @@ public class StudentUI extends JFrame {
         inputPanel.add(emailField);
 
         // Panel des boutons (action panel)
-        JPanel actionPanel = new JPanel(new GridLayout(1, 4, 10, 10));
+        JPanel actionPanel = new JPanel(new FlowLayout());
         actionPanel.setBorder(BorderFactory.createTitledBorder("Actions"));
 
         JButton addButton = new JButton("Ajouter");
         JButton updateButton = new JButton("Mettre à jour");
         JButton deleteButton = new JButton("Supprimer");
         JButton viewButton = new JButton("Afficher tout");
+
+        addButton.setFont(new Font("Arial", Font.BOLD, 14));
+        addButton.setForeground(Color.WHITE);
+        addButton.setBackground(Color.BLUE);
+        addButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         actionPanel.add(addButton);
         actionPanel.add(updateButton);

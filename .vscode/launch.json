@@ -6,6 +6,20 @@
     "configurations": [
       {
         "type": "java",
+        "name": "FormLayoutExample",
+        "request": "launch",
+        "mainClass": "ui.FormLayoutExample",
+        "projectName": "GestStudent_b3264c05"
+      },
+      {
+        "type": "java",
+        "name": "CustomSwingUI",
+        "request": "launch",
+        "mainClass": "ui.CustomSwingUI",
+        "projectName": "GestStudent_b3264c05"
+      },
+      {
+        "type": "java",
         "name": "StudentUI",
         "request": "launch",
         "mainClass": "ui.StudentUI",
